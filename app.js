@@ -431,8 +431,12 @@ const SUGGESTIONS = [
 
 let readAloud = true;
 
+function apiKey() {
+  return state.apiKey || window.DEFAULT_API_KEY || "";
+}
+
 function showTutor() {
-  const hasKey = !!state.apiKey;
+  const hasKey = !!apiKey();
   document.getElementById("tutorSetup").style.display = hasKey ? "none" : "";
   document.getElementById("tutorChat").style.display = hasKey ? "" : "none";
   if (!hasKey) return;
@@ -488,7 +492,7 @@ async function sendChat() {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        "x-api-key": state.apiKey,
+        "x-api-key": apiKey(),
         "anthropic-version": "2023-06-01",
         "anthropic-dangerous-direct-browser-access": "true"
       },
